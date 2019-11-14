@@ -325,7 +325,7 @@ SegNumber(word segno)
  * Returns a pointer to the activation record of a specified procedure
  * in a specified segment.
  */
-inline word
+static inline word
 Proc(word segno, byte ProcNr)
 {
     PointerCheck(segno);
@@ -480,7 +480,7 @@ jump(signed char disp)
 /*
  * Calculates the static link pointer for a procedure.
  */
-inline word
+static inline word
 StaticLink(word NewSeg, byte ProcNo)
 {
     word NewJTab = Proc(NewSeg, ProcNo);
@@ -788,10 +788,10 @@ List(FILE *out, int SegNo, word jtab)
 void
 Debugger(void)
 {
-    char prompt[64];
+    char prompt[256+64]; /* Hold maximum Buffer plus rough guess at other sizes. */
     char Buffer[256];
-    int from;
-    int to;
+    unsigned int from;
+    unsigned int to;
     char Buf[10];
     char *line;
     FILE *out;
